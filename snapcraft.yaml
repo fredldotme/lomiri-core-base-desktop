@@ -26,7 +26,7 @@ parts:
       #- BASE: ubuntu-base-${RELEASE}-base-${CRAFT_ARCH_BUILD_FOR}.tar.gz
       #- DIR_URL: https://cdimage.ubuntu.com/ubuntu-base/releases/${RELEASE}/release
       - BASE: noble-base-${CRAFT_ARCH_BUILD_FOR}.tar.gz
-      - DIR_URL: https://cdimage.ubuntu.com/ubuntu-base/daily/current
+      - DIR_URL: https://cdimage.ubuntu.com/ubuntu-base/noble/daily/current
       - URL: ${DIR_URL}/${BASE}
       - SHA256: ${DIR_URL}/SHA256SUMS
       - SIG: ${SHA256}.gpg
