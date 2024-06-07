@@ -1,0 +1,43 @@
+type: model
+authority-id: sn8fmpyzUyePDXxdKNarfyETVwNiz0wh
+revision: 2
+series: 16
+brand-id: sn8fmpyzUyePDXxdKNarfyETVwNiz0wh
+model: ubuntu-core-24-arm64-dangerous
+architecture: arm64
+base: lomiri-core24-desktop
+grade: dangerous
+snaps:
+  -
+    default-channel: 24/edge
+    id: UqFziVZDHLSyO3TqSWgNBoAdHbLI4dAH
+    name: lomiri-pc
+    type: gadget
+  -
+    default-channel: 23.10/edge
+    id: pYVQrBcKmBa0mZ4CCN7ExT6jH8rY1hza
+    name: pc-kernel
+    type: kernel
+  -
+    default-channel: latest/edge
+    id: dwTAh7MZZ01zyriOZErqd1JynQLiOGvM
+    name: core24
+    type: base
+  -
+    default-channel: latest/edge
+    id: PMrrV4ml8uWuEUDBT8dSGnKUYbevVhc4
+    name: snapd
+    type: snapd
+timestamp: 2024-06-07T16:22:42+00:00
+sign-key-sha3-384: wBlbWH8zsF8q3luld4ZM-E44bK4T8GjlZ0DomNUFHcjNAMJRGPgcpKkCpT_wTAQL
+
+AcLBcwQAAQoAHRYhBNWQJ8I+z+8lsiqvFCiSsZ/LD0EWBQJmYzVsAAoJECiSsZ/LD0EWwwQP/16K
+7JZsxx5ErnFj42YB9qanMxGBBjCmugMbfAkXUU2ugS77KaxsWK32x2ihDphyooIKE0njIs8rThkw
+IRavpR+yuPlW8PuohzNB4tDC/zHl3yNdaRvF5OxuKyEydf05V5Dh28NEPrU/boWC7of0ABswvvgW
+6MDeLsjiWHeUg3AfH/+Jq8IYr9zvCKXyq72ETYMgt0cprDUMkziLoTPwTFzYHzdAdD7XIjAqN6YR
+TW5xSHTfT58HHqhxjRfsXurrUeJFvMwU0KUoTXPdGl4hifMMNsBGUuZ1HyGRbQbtnUiJDnFGYAj2
+uCoraIvg5vea/Pd0CQ/GJQsONIxGUwXxZU19N6u98QbBRJ46rnv0A1bHH/KLKn+h5FE6Rh5Va+xa
+qchFF1Hc0NB+tlCphgPdzHVW6MxrH2awMn+JnTXLOs8kM0PFFBCYsE6MRUraif+jwzPDcQACYK+B
+HDo/eKQD7E3dow2Q9q/fwkgHRZxBBOMCyqQs9g6U1y/41ZiZMuVzSIPbtBuRQkYOTYe+X8yJRN6f
+SeSItHGvrKJ+cEZG+RKdhx8wjjdQ9xLo4LLP6Sc3LIR8fhyMwKiUtPvGbDy4dpwlZUfFJFVYqT/L
+mZRSz8pFNmq8KK133xsJfNn4fggM4iAEuAePflczVPfzEGs6oWYibuiY9kHJiijhvLt8LJ/V

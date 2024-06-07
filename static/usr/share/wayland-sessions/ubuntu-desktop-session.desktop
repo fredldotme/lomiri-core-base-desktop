@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=Ubuntu (confined)
-Comment=This session logs you into Ubuntu
-Exec=core-desktop-session-wrapper.sh ubuntu-desktop-session
-TryExec=/snap/bin/ubuntu-desktop-session
+Name=Ubuntu Lomiri (confined)
+Comment=This session logs you into Ubuntu with Lomiri
+Exec=core-desktop-session-wrapper.sh lomiri-session
+TryExec=/snap/bin/lomiri-desktop-session
 Type=Application
-DesktopNames=ubuntu:GNOME
+DesktopNames=ubuntu:Lomiri
 X-GDM-SessionRegisters=true

@@ -1,9 +1,9 @@
-name: core24-desktop
+name: lomiri-core24-desktop
 # version: "24"
 adopt-info: bootstrap
-summary: Runtime environment based on Ubuntu 24.04
+summary: Lomiri runtime environment based on Ubuntu 24.04
 description: |
-  The base snap based on the Ubuntu 24.04 release.
+  The Lomiri base snap based on the Ubuntu 24.04 release.
 confinement: strict
 type: base
 build-base: core24

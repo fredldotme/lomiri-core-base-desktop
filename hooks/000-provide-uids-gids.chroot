@@ -123,6 +123,7 @@ colord:x:202:202:colord colour management daemon:/var/lib/colord:/usr/sbin/nolog
 geoclue:x:203:203::/var/lib/geoclue:/bin/false
 pipewire:x:204:204:Pipewire,,,:/proc:/usr/sbin/nologin
 rtkit:x:205:205:RealtimeKit,,,:/proc:/usr/sbin/nologin
+lightdm:x:400:400:LightDM Display Manager:/var/lib/lightdm:/bin/false
 EOF
 cp /etc/passwd /etc/passwd.orig # We make a copy for a later sanity-compare
 
@@ -164,6 +165,7 @@ colord:*:18495:0:99999:7:::
 geoclue:*:18459:0:99999:7:::
 pipewire:*:18495:0:99999:7:::
 rtkit:*:19390:0:99999:7:::
+lightdm:*:19400:0:99999:7:::
 EOF
 cp /etc/shadow /etc/shadow.orig # We make a copy for a later sanity-compare
 
@@ -232,6 +234,7 @@ geoclue:x:203:
 pipewire:x:204:
 rtkit:x:205:
 scanner:x:206:
+lightdm:x:400:
 EOF
 cp /etc/group /etc/group.orig # We make a copy for a later sanity-compare
 
@@ -300,5 +303,6 @@ geoclue:!::
 pipewire:!::
 rtkit:!::
 scanner:!::
+lightdm:!::
 EOF
 cp /etc/gshadow /etc/gshadow.orig # We make a copy for a later sanity-compare

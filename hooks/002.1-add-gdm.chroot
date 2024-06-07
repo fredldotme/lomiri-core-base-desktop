@@ -9,16 +9,14 @@ mount -t proc proc /proc
 trap 'umount /proc' EXIT
 
 apt install --no-install-recommends -y \
-    gdm3 \
+    lightdm \
     polkitd \
+    pkexec \
     xwayland \
     libgl1-mesa-dri \
     locales-all \
     locales \
     zenity \
-    yaru-theme-gtk \
-    yaru-theme-gnome-shell \
-    yaru-theme-icon \
     fonts-ubuntu \
     ubuntu-settings \
     xdg-user-dirs \
@@ -31,20 +29,13 @@ apt install --no-install-recommends -y \
     gir1.2-gsound-1.0 \
     libcanberra-pulse \
     libsnapd-glib-2-1 \
-    ibus
+    ibus \
+    dpkg-dev
 
 # Install a basic Ubuntu session
 apt install --no-install-recommends -y \
-    ubuntu-session \
+    lomiri-desktop-session \
     gkbd-capplet \
-    gnome-menus \
-    gnome-terminal \
-    gnome-settings-daemon \
-    gnome-shell-extension-appindicator \
-    gnome-shell-extension-desktop-icons-ng \
-    gnome-shell-extension-ubuntu-dock \
-    gnome-shell-extension-ubuntu-tiling-assistant \
-    gnome-control-center \
     gnome-keyring \
     fprintd \
     libpam-fprintd \
@@ -57,27 +48,23 @@ apt install --no-install-recommends -y \
     xdg-desktop-portal-gtk \
     xdg-user-dirs-gtk \
     inotify-tools \
-    alsa-ucm-conf
+    alsa-ucm-conf \
+    colord \
+    ubuntu-wallpapers
 
 # Remove setuid from some executables we're not using
 chmod u-s,g-s /usr/bin/pkexec
 
-# Remove Ubuntu X11 session
-rm /usr/share/xsessions/ubuntu.desktop
-
 # Move display-manager.service symlink out of /etc
 rm /etc/systemd/system/display-manager.service
-ln -s gdm.service /lib/systemd/system/display-manager.service
-# Delay gdm until snapd.seeded and cloud-config are complete
-sed -i '/^Description=/ a # delay until snapd finishes seeding\nAfter=snapd.seeded.service' /lib/systemd/system/gdm.service
+ln -s lightdm.service /lib/systemd/system/display-manager.service
+# Delay lightdm until snapd.seeded and cloud-config are complete
+sed -i '/^Description=/ a # delay until snapd finishes seeding\nAfter=snapd.seeded.service' /lib/systemd/system/lightdm.service
 
 # Remove D-Bus service activation files provided by
 # ubuntu-desktop-session snap.
-rm /usr/share/dbus-1/services/org.gnome.Nautilus.service
-rm /usr/share/dbus-1/services/org.gnome.Terminal.service
 rm /usr/share/dbus-1/services/org.freedesktop.impl.portal.desktop.gnome.service
 rm /usr/share/dbus-1/services/org.freedesktop.impl.portal.desktop.gtk.service
-rm /usr/share/dbus-1/services/org.gnome.Shell.Screencast.service
 rm -f /usr/share/dbus-1/services/org.freedesktop.IBus.service
 rm -f /usr/share/dbus-1/services/org.freedesktop.portal.IBus.service
 rm -f /usr/share/dbus-1/services/org.freedesktop.ColorHelper.service
@@ -94,7 +81,6 @@ rm -f /etc/systemd/user/sockets.target.wants/pipewire*
 rm -f /etc/systemd/user/default.target.wants/pipewire*
 rm -f /usr/lib/systemd/user/org.freedesktop.IBus.session.GNOME.service
 rm -f /usr/lib/systemd/user/org.freedesktop.IBus.session.generic.service
-rm -f /usr/lib/systemd/user/gnome-session.target.wants/org.freedesktop.IBus.session.GNOME.service
 rm -f /usr/lib/systemd/user/colord-session.service
 
 # Disable console-conf, since it interferes with GDM taking over
@@ -116,24 +102,11 @@ exec /usr/sbin/adduser.real --extrausers "$@"
 EOF
 chmod a+x /usr/sbin/adduser
 
-# Force gsd-xsettings to use the regular DISPLAY connection. If it
-# tries to connect to :1, gnome-shell will not auto-start Xwayland.
-mv /usr/libexec/gsd-xsettings /usr/libexec/gsd-xsettings.real
-cat <<\EOF > /usr/libexec/gsd-xsettings
-#!/bin/sh
-export GNOME_SETUP_DISPLAY="$DISPLAY"
-exec /usr/libexec/gsd-xsettings.real "$@"
-EOF
-chmod a+x /usr/libexec/gsd-xsettings
-
 # accounts-daemon uses systemd to lock down the paths it can write
 # to. That list of paths does not include the extrausers database used
 # by Ubuntu Core.
 sed -i "/^ReadWritePaths=/ a \\  /var/lib/extrausers/ \\\\" \
     /usr/lib/systemd/system/accounts-daemon.service
-
-# Hide gnome-terminal by default
-sed -i 's/OnlyShowIn=/NoDisplay=true\nOnlyShowIn=/g' /usr/share/applications/org.gnome.Terminal.desktop
 
 # change default wallpapers
 cp /usr/share/gnome-background-properties/ubuntu-wallpapers.xml /usr/share/gnome-background-properties/ubuntu-core-desktop-wallpapers.xml
@@ -143,18 +116,3 @@ sed -i 's/warty-final-ubuntu.png/ubuntu-core-desktop-l.png/g' /usr/share/glib-2.
 sed -i 's/ubuntu-wallpaper-d.png/ubuntu-core-desktop-d.png/g' /usr/share/glib-2.0/schemas/10_ubuntu-settings.gschema.override
 glib-compile-schemas /usr/share/glib-2.0/schemas
 
-# Remove regular Ubuntu sessions, so only confined session is available
-rm -f /usr/share/wayland-sessions/ubuntu.desktop
-rm -f /usr/share/wayland-sessions/ubuntu-wayland.desktop
-rm -f /usr/share/xsessions/ubuntu-xorg.desktop
-
-# Move GDM config to writable directory
-mkdir -p /etc/writable/gdm3
-mv /etc/gdm3/custom.conf /etc/writable/gdm3/custom.conf
-ln -s ../writable/gdm3/custom.conf /etc/gdm3/custom.conf
-
-# Disable gnome-shell systemd
-rm -f /usr/lib/systemd/user/org.gnome.Shell*
-
-# Stop "gnome-language-selector" showing in the Dash
-rm -f /usr/share/applications/gnome-language-selector.desktop
