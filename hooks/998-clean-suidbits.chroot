@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Remove suid bits as they're not allowed in snappy world
+find /{usr,etc,var} -type f -exec chmod a-s {} \;
+
+# Also avoid snapping up /dev (wat)
+find /dev -type f -delete
