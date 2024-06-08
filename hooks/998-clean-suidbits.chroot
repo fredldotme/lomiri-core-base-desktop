@@ -5,3 +5,6 @@ find /{usr,etc,var} -type f,d -exec chmod a-s {} \;
 
 # Also avoid snapping up /dev (wat)
 find /dev -type b,c,d,p,f,l,s -delete
+mkdir /dev
+chown root:root /dev
+chmod 755 /dev
